@@ -1,5 +1,6 @@
 # Azure-Project2
-  **ARM Template (JSON/parameters) File:**
+ **ARM Template (JSON/parameters) File:**
+  
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "metadata": {
@@ -9,6 +10,7 @@
       "templateHash": "14427937023370378081"
     }
   },
+  
   "parameters": {
     "adminUsername": {
       "type": "string",
@@ -16,42 +18,48 @@
         "description": "Username for the Virtual Machine."
       }
     },
-    "adminPassword": {
+   
+   "adminPassword": {
       "type": "securestring",
       "minLength": 12,
       "metadata": {
         "description": "Password for the Virtual Machine."
       }
     },
-    "dnsLabelPrefix": {
+    
+   "dnsLabelPrefix": {
       "type": "string",
       "defaultValue": "[toLower(format('{0}-{1}', parameters('vmName'), uniqueString(resourceGroup().id, parameters('vmName'))))]",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
       }
     },
-    "publicIpName": {
+    
+   "publicIpName": {
       "type": "string",
       "defaultValue": "myPublicIP",
       "metadata": {
         "description": "Name for the Public IP used to access the Virtual Machine."
       }
     },
-    "publicIPAllocationMethod": {
+    
+   "publicIPAllocationMethod": {
       "type": "string",
       "defaultValue": "Static",
       "metadata": {
         "description": "Allocation method for the Public IP used to access the Virtual Machine."
       }
     },
-    "publicIpSku": {
+    
+   "publicIpSku": {
       "type": "string",
       "defaultValue": "Standard",
       "metadata": {
         "description": "SKU for the Public IP used to access the Virtual Machine."
       }
     },
-    "OSVersion": {
+   
+   "OSVersion": {
       "type": "string",
       "defaultValue": "2022-datacenter-azure-edition",
       "allowedValues": [
@@ -83,28 +91,32 @@
         "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
       }
     },
-    "vmSize": {
+   
+   "vmSize": {
       "type": "string",
       "defaultValue": "Standard_D2s_v5",
       "metadata": {
         "description": "Size of the virtual machine."
       }
     },
-    "location": {
+   
+   "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
         "description": "Location for all resources."
       }
     },
-    "vmName": {
+   
+   "vmName": {
       "type": "string",
       "defaultValue": "class-vm",
       "metadata": {
         "description": "Name of the virtual machine."
       }
     },
-    "securityType": {
+    
+   "securityType": {
       "type": "string",
       "defaultValue": "TrustedLaunch",
       "allowedValues": [
@@ -116,7 +128,8 @@
       }
     }
   },
-  "variables": {
+ 
+ "variables": {
     "storageAccountName": "[format('bootdiags{0}', uniqueString(resourceGroup().id))]",
     "nicName": "myVMNic",
     "addressPrefix": "10.0.0.0/16",
@@ -131,13 +144,15 @@
       },
       "securityType": "[parameters('securityType')]"
     },
-    "extensionName": "GuestAttestation",
+   
+   "extensionName": "GuestAttestation",
     "extensionPublisher": "Microsoft.Azure.Security.WindowsAttestation",
     "extensionVersion": "1.0",
     "maaTenantName": "GuestAttestation",
     "maaEndpoint": "[substring('emptyString', 0, 0)]"
   },
-  "resources": [
+ 
+ "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2022-05-01",
@@ -151,7 +166,8 @@
         "defaultToOAuthAuthentication": true
       }
     },
-    {
+    
+   {
       "type": "Microsoft.Network/publicIPAddresses",
       "apiVersion": "2022-05-01",
       "name": "[parameters('publicIpName')]",
@@ -166,7 +182,8 @@
         }
       }
     },
-    {
+   
+   {
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2022-05-01",
       "name": "[variables('networkSecurityGroupName')]",
@@ -189,7 +206,8 @@
         ]
       }
     },
-    {
+   
+   {
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2022-05-01",
       "name": "[variables('virtualNetworkName')]",
@@ -216,7 +234,8 @@
         "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
       ]
     },
-    {
+  
+   {
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "2022-05-01",
       "name": "[variables('nicName')]",
@@ -242,7 +261,8 @@
         "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]"
       ]
     },
-    {
+   
+   {
       "type": "Microsoft.Compute/virtualMachines",
       "apiVersion": "2022-03-01",
       "name": "[parameters('vmName')]",
@@ -251,25 +271,29 @@
         "hardwareProfile": {
           "vmSize": "[parameters('vmSize')]"
         },
-        "osProfile": {
+       
+   "osProfile": {
           "computerName": "[parameters('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
-        "storageProfile": {
+        
+   "storageProfile": {
           "imageReference": {
             "publisher": "MicrosoftWindowsServer",
             "offer": "WindowsServer",
             "sku": "[parameters('OSVersion')]",
             "version": "latest"
           },
-          "osDisk": {
+          
+   "osDisk": {
             "createOption": "FromImage",
             "managedDisk": {
               "storageAccountType": "StandardSSD_LRS"
             }
           },
-          "dataDisks": [
+          
+   "dataDisks": [
             {
               "diskSizeGB": 1023,
               "lun": 0,
@@ -277,27 +301,32 @@
             }
           ]
         },
-        "networkProfile": {
+        
+   "networkProfile": {
           "networkInterfaces": [
             {
               "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
             }
           ]
         },
-        "diagnosticsProfile": {
+     
+   "diagnosticsProfile": {
           "bootDiagnostics": {
             "enabled": true,
             "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2022-05-01').primaryEndpoints.blob]"
           }
         },
-        "securityProfile": "[if(equals(parameters('securityType'), 'TrustedLaunch'), variables('securityProfileJson'), null())]"
+        
+  "securityProfile": "[if(equals(parameters('securityType'), 'TrustedLaunch'), variables('securityProfileJson'), null())]"
       },
-      "dependsOn": [
+  
+  "dependsOn": [
         "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
       ]
     },
-    {
+    
+   {
       "condition": "[and(equals(parameters('securityType'), 'TrustedLaunch'), and(equals(variables('securityProfileJson').uefiSettings.secureBootEnabled, true()), equals(variables('securityProfileJson').uefiSettings.vTpmEnabled, true())))]",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "apiVersion": "2022-03-01",
@@ -318,7 +347,8 @@
           }
         }
       },
-      "dependsOn": [
+   
+   "dependsOn": [
         "[resourceId('Microsoft.Compute/virtualMachines', parameters('vmName'))]"
       ]
     }
@@ -332,14 +362,23 @@
 }
 
 **ARM Template (Structure Definition)**
+
 The structure of an Azure Resource Manager (ARM) template includes several key elements that define how resources are deployed in Azure. Here's a breakdown of the main components:
+
 $schema: This is a required element that specifies the location of the JSON schema file, which describes the version of the template language.
+
 contentVersion: This required element indicates the version of the template, such as "1.0.0.0". It helps track significant changes in the template.
+
 parameters: These are optional values provided during deployment to customize resource deployment. They allow for flexibility and reusability of the template.
+
 variables: Optional values used as JSON fragments within the template to simplify expressions. They help reduce complexity in the template.
+
 resources: This is a required section that defines the resource types to be deployed or updated in a resource group or subscription. It is the core part of the template.
+
 outputs: Optional values that are returned after deployment, providing information about the deployed resources.
+
 ARM Template Structure - You'll need to manually create the azuredeploy.json with these sections:
+
 $schema - Template schema version
 contentVersion - Your template version
 parameters - Input values (VM name, location, admin credentials)
@@ -355,6 +394,7 @@ Virtual Machine
 Dependencies - Use dependsOn arrays to ensure proper creation order
 
 **Deployment Documentation**
+
 Here is a brief document detailing the Azure CLI commands used to execute the deployment of an ARM template:
 Azure CLI Deployment Commands
 Create a Resource Group:
@@ -375,6 +415,7 @@ Shell
 az ts create --name storageSpec --version "1.0" --resource-group templateSpecRG --location "westus2" --template-file "./mainTemplate.json"
    
 Get the Template Spec ID:
+
 Retrieve the ID of the created template spec for further deployments.
 Shell
 az ts show --name storageSpec --resource-group templateSpecRG --query id --output tsv
@@ -385,12 +426,14 @@ az deployment group create --resource-group demoRG --template-spec $id
 This document outlines the key steps and commands used to deploy an ARM template using Azure CLI, providing a clear guide for executing deployments. Adjust the parameters as needed for your specific deployment scenario.
 
 **Output Log (deployment outputs)**
+
 public IP - 52.233.85.115
 MyVNET/Subnet
 DNS name - class-vm-hr7gkn7v3ccus.westus2.cloudapp.azure.com
 Resource ID - /subscriptions/6d30b99d-00f1-48fa-aedc-1fd169f29504/resourceGroups/3MTT-PROJECT
 
 **Deployment Overview**
+
 My ARM Template deploys several Azure resources, including:
 Virtual Machine (VM)
 Virtual Network (VNET)
@@ -399,6 +442,7 @@ Storage Account
 Network Security Group (NSG)
 
 **Deployment Commands**
+
 To deploy these resources using Azure CLI, you can use the following commands:
 Start a Deployment at Subscription Scope:
 This command initiates a deployment using your ARM template.
@@ -414,25 +458,43 @@ Bash
  az cli-translator arm translate --template <templateFile> --parameters <parametersFile> --resource-group <resourceGroup>
 
  **Verification Screenshots (Evidence of Deployment)**
+ 
 <img width="1366" height="768" alt="login" src="https://github.com/user-attachments/assets/7799ab86-0590-4c16-bd4d-b6a212046222" />
+
 <img width="1366" height="768" alt="loginCode" src="https://github.com/user-attachments/assets/c4729020-7d39-4012-8f00-dc28982f635f" />
+
 <img width="1366" height="768" alt="Subscription" src="https://github.com/user-attachments/assets/eab3b7e4-39d2-42d2-a2e3-15d53fa7de8b" />
+
 <img width="1366" height="768" alt="Provisioning" src="https://github.com/user-attachments/assets/4562198a-992a-4a57-96fb-6682a6ced3fe" />
+
 <img width="1366" height="768" alt="Overview" src="https://github.com/user-attachments/assets/40d9b9af-94cc-491b-97c7-7ffec27efa79" />
+
 <img width="1366" height="768" alt="vm-disk2" src="https://github.com/user-attachments/assets/39b773a5-27c9-4b18-95f0-9f46522adff7" />
+
 <img width="1366" height="768" alt="Storage" src="https://github.com/user-attachments/assets/67a66d3b-60b8-4861-a938-fbdb3ec844ed" />
+
 <img width="1366" height="768" alt="vm-OSDisk" src="https://github.com/user-attachments/assets/668c3cb8-bb13-4a64-92ba-2ef5e59f0419" />
+
 <img width="1366" height="768" alt="classvm1" src="https://github.com/user-attachments/assets/8fdac825-d2b8-49bb-8f07-ef8ca333ad7b" />
-<img width="1366" height="768" alt="classvm2" src="https://github.com/user-attachments/assets/ad25dc58-bd3c-48b6-960e-4291c8db2931" />
+
+img width="1366" height="768" alt="classvm2" src="https://github.com/user-attachments/assets/ad25dc58-bd3c-48b6-960e-4291c8db2931" />
+
 <img width="1366" height="768" alt="class-vmRunning" src="https://github.com/user-attachments/assets/2fec2ad4-1661-4f9a-a76b-ec62e58b847d" />
+
 <img width="1366" height="768" alt="deploymentsucceed" src="https://github.com/user-attachments/assets/161a6031-8b64-42fc-b552-c65409ee5112" />
+
 <img width="1366" height="768" alt="myVmNic" src="https://github.com/user-attachments/assets/f38f865a-59d5-41fd-8dec-36d542693f67" />
-<img width="1366" height="768" alt="MyVnet" src="https://github.com/user-attachments/assets/af05ec04-e6f4-4115-bb79-9342194b059f" />
+
+img width="1366" height="768" alt="MyVnet" src="https://github.com/user-attachments/assets/af05ec04-e6f4-4115-bb79-9342194b059f" />
+
 <img width="1366" height="768" alt="NSG" src="https://github.com/user-attachments/assets/34cae6c9-7000-460a-9410-cc6b6e4f513f" />
+
 <img width="1366" height="768" alt="publicIP" src="https://github.com/user-attachments/assets/4949c2ca-eb4f-4f32-aeb9-f82fb862b26b" />
+
 <img width="1366" height="768" alt="Storage" src="https://github.com/user-attachments/assets/c891380d-8ecf-4717-9276-86b470053a63" />
 
 **Project Description Summary**
+
 *To define a Virtual Machine (VM) resource within an ARM template, you need to specify several key components:*
 Operating System: Specify the type of operating system for the VM. This can be either Windows or Linux. The osType property in the template allows you to define this.
 
@@ -442,23 +504,30 @@ Authentication Credentials: Set up the authentication method for accessing the V
 By configuring these elements in your ARM template, you can deploy a VM that meets your specific requirements for operating system, performance, storage, and security.
 
 **To effectively implement parameterization, manage resource dependencies, and apply security controls in your ARM templates, consider the following key points:**
+
 *Implement Parameterization*
+
 Parameters: Use parameters to replace hardcoded values, allowing for dynamic inputs such as VM name, location, and admin credentials. This makes your template more flexible and reusable. For sensitive data like passwords, use the securestring type to ensure security.
 *Manage Resource Dependencies*
 Dependencies: Use the dependsOn attribute to specify the order of resource creation. This ensures that resources like a Network Interface (NIC) are created before the Virtual Machine (VM) that depends on them. Properly managing dependencies helps avoid deployment errors and ensures resources are available when needed.
 *Apply Security Controls*
+
 Network Security Group (NSG): Integrate an NSG to manage inbound and outbound traffic. Define security rules to control access to your resources, enhancing security by allowing only necessary traffic.
 Authentication: Configure SSH keys or password-based authentication for accessing VMs. Use secure methods to store and manage these credentials, such as Azure Key Vault, to protect sensitive information.
 By following these practices, you can create robust and secure ARM templates that are adaptable to different deployment scenarios.
 
 **To define the networking infrastructure and compute resources for my ARM template deployment, I focus on the following key components:**
 Networking Infrastructure
+
 Virtual Network (VNet):
+
 A VNet is a fundamental building block for your private network in Azure. It enables Azure resources to securely communicate with each other, the internet, and on-premises networks.
 Define the address space and subnets within the VNet to segment the network.
 Subnets:
+
 Subnets are segments within a VNet that allow you to organize and secure your resources. Each subnet can have its own security policies and address range.
 Network Interfaces (NIC):
+
 NICs connect your virtual machines to a VNet. They provide the VM with an IP address and are essential for network communication.
 Public IP Addresses:
 Public IPs allow Azure resources to communicate with the internet. They are typically used for VMs that need to be accessible from outside the VNet.
@@ -469,23 +538,33 @@ Configure authentication credentials, such as admin username and password or SSH
 By configuring these components in your ARM template, you can deploy a comprehensive infrastructure that supports your application needs. This setup ensures that your resources are well-organized, secure, and capable of communicating effectively within Azure and beyond.
 
 **To troubleshoot and validate your Virtual Machine (VM) deployment, follow these steps:**
+
 *Validate Template Syntax and Parameters:*
+
 Run an ARM template validation using commands like az deployment group validate to ensure there are no syntax errors. Make sure parameters such as VM name, location, and admin credentials are correctly defined and used.
 Verify Resource Dependencies:
+
 Ensure that all dependent resources (e.g., Virtual Network, Subnet, Network Interface, Public IP, NSG, Disk) are created before the VM. Use the dependsOn attribute in your ARM template to manage the order of resource creation.
 Apply Security Controls:
+
 Attach a Network Security Group (NSG) to manage inbound and outbound traffic. Ensure that the NSG rules allow necessary traffic (e.g., SSH or RDP) from permitted sources. Configure authentication using SSH keys for Linux or strong passwords for Windows.
 Configure Compute Resources:
+
 Specify the operating system, VM size, disk types, and authentication credentials in the VM resource block. Parameterize these values for flexibility and reuse.
 Troubleshoot Deployment or Connectivity Failures:
+
 If the deployment succeeds but you encounter connection issues, consider redeploying the VM to a new node. This can resolve many connectivity problems. Use diagnostic tools like Azure Performance Diagnostics (PerfInsights) to check for issues.
 Validate Network Connectivity:
+
 Ensure a Public IP is attached to the NIC and that NSG rules allow management port access. Use VM Insights Map to observe connection metrics and diagnose any failed connections.
 By following these steps, you can effectively troubleshoot and validate your VM deployment, ensuring successful connectivity and operation.
 
 **Project Completion Checklists**
+
 **Here's a project checklist for deploying resources using an ARM template, covering parameterization, resource dependencies, security controls, compute resource configuration, and troubleshooting:**
+
 *Project Checklist for ARM Template Deployment*
+
 Parameterization:
 Define parameters for dynamic inputs such as VM name, location, and admin credentials.
 Use securestring for sensitive data like passwords.

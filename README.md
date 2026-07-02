@@ -441,7 +441,7 @@ Network Interface Card (NIC)
 Storage Account
 Network Security Group (NSG)
 
-                **Deployment Commands**
+**Deployment Commands**
 
 To deploy these resources using Azure CLI, you can use the following commands:
 Start a Deployment at Subscription Scope:
@@ -477,7 +477,7 @@ Bash
 
 <img width="1366" height="768" alt="classvm1" src="https://github.com/user-attachments/assets/8fdac825-d2b8-49bb-8f07-ef8ca333ad7b" />
 
-img width="1366" height="768" alt="classvm2" src="https://github.com/user-attachments/assets/ad25dc58-bd3c-48b6-960e-4291c8db2931" />
+<img width="1366" height="768" alt="classvm2" src="https://github.com/user-attachments/assets/ad25dc58-bd3c-48b6-960e-4291c8db2931" />
 
 <img width="1366" height="768" alt="class-vmRunning" src="https://github.com/user-attachments/assets/2fec2ad4-1661-4f9a-a76b-ec62e58b847d" />
 
@@ -485,7 +485,7 @@ img width="1366" height="768" alt="classvm2" src="https://github.com/user-attach
 
 <img width="1366" height="768" alt="myVmNic" src="https://github.com/user-attachments/assets/f38f865a-59d5-41fd-8dec-36d542693f67" />
 
-img width="1366" height="768" alt="MyVnet" src="https://github.com/user-attachments/assets/af05ec04-e6f4-4115-bb79-9342194b059f" />
+<img width="1366" height="768" alt="MyVnet" src="https://github.com/user-attachments/assets/af05ec04-e6f4-4115-bb79-9342194b059f" />
 
 <img width="1366" height="768" alt="NSG" src="https://github.com/user-attachments/assets/34cae6c9-7000-460a-9410-cc6b6e4f513f" />
 

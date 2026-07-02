@@ -361,7 +361,7 @@
   }
 }
 
-**ARM Template (Structure Definition)**
+            **ARM Template (Structure Definition)**
 
 The structure of an Azure Resource Manager (ARM) template includes several key elements that define how resources are deployed in Azure. Here's a breakdown of the main components:
 
@@ -393,7 +393,7 @@ Network Interface (NIC)
 Virtual Machine
 Dependencies - Use dependsOn arrays to ensure proper creation order
 
-**Deployment Documentation**
+                **Deployment Documentation**
 
 Here is a brief document detailing the Azure CLI commands used to execute the deployment of an ARM template:
 Azure CLI Deployment Commands
@@ -425,14 +425,14 @@ Shell
 az deployment group create --resource-group demoRG --template-spec $id
 This document outlines the key steps and commands used to deploy an ARM template using Azure CLI, providing a clear guide for executing deployments. Adjust the parameters as needed for your specific deployment scenario.
 
-**Output Log (deployment outputs)**
+                      **Output Log (deployment outputs)**
 
 public IP - 52.233.85.115
 MyVNET/Subnet
 DNS name - class-vm-hr7gkn7v3ccus.westus2.cloudapp.azure.com
 Resource ID - /subscriptions/6d30b99d-00f1-48fa-aedc-1fd169f29504/resourceGroups/3MTT-PROJECT
 
-**Deployment Overview**
+                 **Deployment Overview**
 
 My ARM Template deploys several Azure resources, including:
 Virtual Machine (VM)
@@ -441,7 +441,7 @@ Network Interface Card (NIC)
 Storage Account
 Network Security Group (NSG)
 
-**Deployment Commands**
+                **Deployment Commands**
 
 To deploy these resources using Azure CLI, you can use the following commands:
 Start a Deployment at Subscription Scope:
@@ -457,7 +457,7 @@ This command helps translate your ARM template into CLI scripts for a better und
 Bash
  az cli-translator arm translate --template <templateFile> --parameters <parametersFile> --resource-group <resourceGroup>
 
- **Verification Screenshots (Evidence of Deployment)**
+               **Verification Screenshots (Evidence of Deployment)**
  
 <img width="1366" height="768" alt="login" src="https://github.com/user-attachments/assets/7799ab86-0590-4c16-bd4d-b6a212046222" />
 
@@ -493,7 +493,7 @@ img width="1366" height="768" alt="MyVnet" src="https://github.com/user-attachme
 
 <img width="1366" height="768" alt="Storage" src="https://github.com/user-attachments/assets/c891380d-8ecf-4717-9276-86b470053a63" />
 
-**Project Description Summary**
+                  **Project Description Summary**
 
 *To define a Virtual Machine (VM) resource within an ARM template, you need to specify several key components:*
 Operating System: Specify the type of operating system for the VM. This can be either Windows or Linux. The osType property in the template allows you to define this.
@@ -559,7 +559,7 @@ Validate Network Connectivity:
 Ensure a Public IP is attached to the NIC and that NSG rules allow management port access. Use VM Insights Map to observe connection metrics and diagnose any failed connections.
 By following these steps, you can effectively troubleshoot and validate your VM deployment, ensuring successful connectivity and operation.
 
-**Project Completion Checklists**
+                       **Project Completion Checklists**
 
 **Here's a project checklist for deploying resources using an ARM template, covering parameterization, resource dependencies, security controls, compute resource configuration, and troubleshooting:**
 

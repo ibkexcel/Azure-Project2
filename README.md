@@ -1,5 +1,5 @@
 # Azure-Project2
-
+https://github.com/ibkexcel/Azure-Project2/blob/02ab529799b32c05055e6dec2b369875b1a71b51/azuredeploytemplate.json.txt
 
             **ARM Template (Structure Definition)**
 
